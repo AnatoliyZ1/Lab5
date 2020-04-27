@@ -24,7 +24,8 @@ x3del = x3max - x3_aver
 y_min = 200 + int(x_aver_min)
 y_max = 200 + int(x_aver_max)
 
-
+aver = []
+aver_arr = []
 def main (m=3):
     print("Рівняння регресії")
     print("y=b0+b1*x1+b2*x2+b3*x3+b12*x1*x2+b13*x1*x3+b23*x2*x3+b123*x1*x2*x3+b11*x1^2+b22*x2^2+b33*x3^2")
@@ -139,13 +140,16 @@ def main (m=3):
     T = student_teoretical(df=f3)
     d = 0
 
+
     for i in range(len(tethas)):
         if tethas[i] < T:
             bethas[i] = 0
             print(f"Приймаємо betha{i} незначимим")
         else:
+            aver.append(bethas[i])
             print(f"Betha{i} = {bethas[i]}")
             d += 1
+    aver_arr.append(sum(aver) / len(aver))
 
     yy1 = bethas[0] + bethas[1] * x1min + bethas[2] * x2min + bethas[3] * x3min + bethas[4] * x1min * x2min + bethas[
         5] * x1min * x3min + bethas[
@@ -220,9 +224,14 @@ def main (m=3):
         print("Рівняння регресії адекватне оригіналу")
     else:
         print("Рівняння регресії не є адекватне оригіналу")
-        m += 1
-        main(m)
+        m+=1
+        if (m <= 100):
+            main(m)
+
+
+
 
 
 if __name__ == '__main__':
     main()
+    print("Середнє значення значимих коефіцієнтів = ", sum(aver_arr) / 100)
